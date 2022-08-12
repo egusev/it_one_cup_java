@@ -10,5 +10,8 @@ spring:
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
-logging.level:
-  org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n'
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG

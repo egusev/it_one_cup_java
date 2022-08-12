@@ -51,6 +51,9 @@ public class TablesDao {
         } catch (BadSqlGrammarException bge ) {
             log.error("Could not create table {} with params {} ",
                       tableMetaDto.getTableName(),
+                      tableMetaDto);
+            log.debug("Could not create table {} with params {} ",
+                      tableMetaDto.getTableName(),
                       tableMetaDto,
                       bge);
             throw new SQLException(bge);
@@ -112,7 +115,8 @@ public class TablesDao {
             jdbcTemplate.execute("DROP TABLE " + tableName);
         }
         catch(BadSqlGrammarException bge) {
-            log.error("Can't delete table {}", tableName, bge);
+            log.error("Can't delete table {}", tableName);
+            log.debug("Can't delete table {}", tableName, bge);
             throw new SQLException(bge);
         }
     }
