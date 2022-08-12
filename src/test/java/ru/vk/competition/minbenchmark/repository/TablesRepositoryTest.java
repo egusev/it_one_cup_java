@@ -16,13 +16,11 @@ import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import ru.vk.competition.minbenchmark.MinbenchmarkApplication;
 import ru.vk.competition.minbenchmark.dto.ColumnMetaDTO;
 import ru.vk.competition.minbenchmark.dto.TableMetaDto;
 
 @SpringBootTest(classes = {MinbenchmarkApplication.class})
-@ActiveProfiles("dev")
 class TablesRepositoryTest {
 
     @Autowired
