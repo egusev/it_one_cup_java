@@ -1,5 +1,6 @@
 package ru.vk.competition.minbenchmark.service.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,12 +11,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vk.competition.minbenchmark.dto.TableQueryDto;
+import ru.vk.competition.minbenchmark.repository.QueriesDao;
 import ru.vk.competition.minbenchmark.service.TableQueriesService;
 
 @Service
 public class TableQueriesServiceImpl implements TableQueriesService {
+
+    @Autowired
+    private QueriesDao queriesDao;
 
     private final Map<Integer, TableQueryDto> idToTableQueryMap = new HashMap<>();
 
@@ -79,8 +85,11 @@ public class TableQueriesServiceImpl implements TableQueriesService {
             throw new IllegalArgumentException("Table query with id " + id + " doesn't exist");
         }
 
-        // todo execute query
-
+        try {
+            queriesDao.execute(tableQueryDto.getQuery());
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     void add(TableQueryDto tableQueryDto) {
