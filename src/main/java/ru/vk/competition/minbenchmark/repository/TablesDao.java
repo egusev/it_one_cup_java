@@ -46,7 +46,7 @@ public class TablesDao {
                      tableMetaDto.getTableName(),
                      tableMetaDto.getColumnsAmount(),
                      tableMetaDto.getPrimaryKey());
-        } catch (BadSqlGrammarException bge ) {
+        } catch (BadSqlGrammarException bge) {
             log.error("Could not create table {} with params {} ",
                       tableMetaDto.getTableName(),
                       tableMetaDto);
