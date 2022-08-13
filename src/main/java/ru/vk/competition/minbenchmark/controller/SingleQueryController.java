@@ -11,7 +11,7 @@ import ru.vk.competition.minbenchmark.service.SingleQueryService;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/single-query")
+@RequestMapping("/api/single-query/old")
 @RequiredArgsConstructor
 public class SingleQueryController {
 
