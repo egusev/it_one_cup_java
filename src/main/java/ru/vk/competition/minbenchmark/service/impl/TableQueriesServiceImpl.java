@@ -73,6 +73,13 @@ public class TableQueriesServiceImpl implements TableQueriesService {
 
     @Override
     public void execute(int id) throws IllegalArgumentException {
+        TableQueryDto tableQueryDto = idToTableQueryMap.get(id);
+
+        if (tableQueryDto == null) {
+            throw new IllegalArgumentException("Table query with id " + id + " doesn't exist");
+        }
+
+        // todo execute query
 
     }
 

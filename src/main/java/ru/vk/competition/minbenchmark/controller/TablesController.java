@@ -2,6 +2,7 @@ package ru.vk.competition.minbenchmark.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -54,10 +55,10 @@ public class TablesController {
     }
 
     private boolean validate(TableMetaDto tableMetaDto) {
-        if (tableMetaDto.getTableName() == null) {
+        if (StringUtils.isBlank(tableMetaDto.getTableName())) {
             return false;
         }
-        if (tableMetaDto.getPrimaryKey() == null) {
+        if (StringUtils.isBlank(tableMetaDto.getPrimaryKey())) {
             return false;
         }
         if (tableMetaDto.getColumnInfos() == null) {
