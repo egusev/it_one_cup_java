@@ -13,8 +13,8 @@ public final class TypeSerializer {
             case Types.BINARY:
             case Types.VARCHAR:
             case Types.CHAR:
-                return typeName.getName() + "(" + length + ")";
-//                return "varchar(" + length + ")";
+                return length == 1000000000? typeName.getName()
+                                           : typeName.getName() + "(" + length + ")";
             case Types.TINYINT:
             case Types.SMALLINT:
             case Types.INTEGER:

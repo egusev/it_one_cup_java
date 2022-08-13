@@ -1,5 +1,7 @@
 package ru.vk.competition.minbenchmark.controller;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ru.vk.competition.minbenchmark.dto.ColumnMetaDto;
 import ru.vk.competition.minbenchmark.dto.TableMetaDto;
 import ru.vk.competition.minbenchmark.service.TablesService;
 
@@ -20,6 +23,9 @@ import ru.vk.competition.minbenchmark.service.TablesService;
 @RequestMapping("/api/table")
 @RequiredArgsConstructor
 public class TablesController {
+
+    private static final Map<String, String> SQL_TYPE_FIXES = Map.of("VARCHAR","CHARACTER VARYING",
+                                                                     "VARCHAR\\(\\d+\\)", "CHARACTER VARYING");
 
     private final TablesService tablesService;
 
@@ -33,6 +39,12 @@ public class TablesController {
         }
 
         try {
+            for (ColumnMetaDto column : tableMetaDto.getColumnInfos()) {
+                log.info("{}:{}", column.getTitle(), column.getType());
+                if (column.getTitle().equalsIgnoreCase("integer")) {
+                    column.setTitle("int4");
+                }
+            }
             tablesService.createTable(tableMetaDto);
             log.info("table created");
             return new ResponseEntity(HttpStatus.CREATED);
@@ -47,6 +59,13 @@ public class TablesController {
         log.info("GET /api/table/get-table-by-name/{}", name);
         TableMetaDto tableMeta = tablesService.findTableMeta(name);
         log.info("found {}", tableMeta != null);
+        if (tableMeta != null) {
+            for (ColumnMetaDto column : tableMeta.getColumnInfos()) {
+                column.setType(typeConverter(column.getType()));
+                log.info("{}:{}", column.getTitle(), column.getType());
+            }
+        }
+
         return new ResponseEntity<>(tableMeta, HttpStatus.OK);
     }
 
@@ -78,5 +97,14 @@ public class TablesController {
         }
 
         return true;
+    }
+
+    static String typeConverter(String orig) {
+        for (Entry<String, String> entry : SQL_TYPE_FIXES.entrySet()) {
+            if (orig.matches(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return orig;
     }
 }

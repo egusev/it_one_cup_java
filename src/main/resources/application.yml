@@ -12,9 +12,10 @@ spring:
 
 logging:
   pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n'
+    console: '%d{HH:mm:ss} - %msg%n'
   level:
     org: WARN
     com: WARN
     ru.vk.competition.minbenchmark.MinbenchmarkApplication: WARN
+    ru.vk.competition.minbenchmark.controller.TablesController: WARN
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
