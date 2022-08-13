@@ -57,6 +57,7 @@ class ReportServiceImplTest {
                                                                       "TITLE", "3",
                                                                       "STATUS", "1"));
 
+        queriesDao.execute("drop table test");
     }
 
     @Test
@@ -95,5 +96,7 @@ class ReportServiceImplTest {
         assertThat(request2.getColumns()).extracting("title", "size")
                                          .containsExactlyInAnyOrder(tuple("id", "0"));
 
+        queriesDao.execute("drop table test");
+        queriesDao.execute("drop table basa");
     }
 }

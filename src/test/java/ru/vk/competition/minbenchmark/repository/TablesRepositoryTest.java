@@ -27,8 +27,9 @@ class TablesRepositoryTest {
     private TablesDao tablesDao;
 
     @Test
-    void testCreateTable_test() throws SQLException {
+    public void testCreateTable_test() throws SQLException {
         tablesDao.createTable(new TableMetaDto("test", 1, "id", Arrays.asList(new ColumnMetaDto("id", "int4"))));
+        tablesDao.deleteTable("test");
     }
 
     @Test
@@ -46,6 +47,7 @@ class TablesRepositoryTest {
                                                                                            new ColumnMetaDto("Email", "VARCHAR(60)"),
                                                                                            new ColumnMetaDto("SupportRepId", "int4")
         )));
+        tablesDao.deleteTable("Customer");
     }
 
     @Test
@@ -54,6 +56,7 @@ class TablesRepositoryTest {
                                                                                 new ColumnMetaDto("name", "varchar"),
                                                                                 new ColumnMetaDto("age", "int4")
         )));
+        tablesDao.deleteTable("Artist");
     }
 
     @Test
@@ -71,6 +74,7 @@ class TablesRepositoryTest {
                                                                                                new ColumnMetaDto("Email", "VARCHAR(60)"),
                                                                                                new ColumnMetaDto("SupportRepId", "int4")
         )));
+        tablesDao.deleteTable("CustomerЛАЛА");
     }
 
     @Test
