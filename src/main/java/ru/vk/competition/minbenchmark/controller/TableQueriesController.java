@@ -186,7 +186,13 @@ public class TableQueriesController {
         if (StringUtils.isBlank(tableQueryDto.getQuery())) {
             return false;
         }
+        if (tableQueryDto.getQuery().length() > 120) {
+            return false;
+        }
         if (StringUtils.isBlank(tableQueryDto.getTableName())) {
+            return false;
+        }
+        if (tableQueryDto.getTableName().length() > 50) {
             return false;
         }
         return true;
