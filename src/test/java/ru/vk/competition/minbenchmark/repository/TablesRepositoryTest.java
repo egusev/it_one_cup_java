@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.vk.competition.minbenchmark.MinbenchmarkApplication;
-import ru.vk.competition.minbenchmark.dto.ColumnMetaDTO;
+import ru.vk.competition.minbenchmark.dto.ColumnMetaDto;
 import ru.vk.competition.minbenchmark.dto.TableMetaDto;
 
 @SpringBootTest(classes = {MinbenchmarkApplication.class})
@@ -28,57 +28,57 @@ class TablesRepositoryTest {
 
     @Test
     void testCreateTable_test() throws SQLException {
-        tablesDao.createTable(new TableMetaDto("test", 1, "id", Arrays.asList(new ColumnMetaDTO("id", "int4"))));
+        tablesDao.createTable(new TableMetaDto("test", 1, "id", Arrays.asList(new ColumnMetaDto("id", "int4"))));
     }
 
     @Test
     void testCreateTable_Customer() throws SQLException {
-        tablesDao.createTable(new TableMetaDto("Customer", 12, "CustomerId", Arrays.asList(new ColumnMetaDTO("CustomerId", "int4"),
-                                                                                           new ColumnMetaDTO("FirstName", "VARCHAR(40)"),
-                                                                                           new ColumnMetaDTO("LastName", "VARCHAR(20)"),
-                                                                                           new ColumnMetaDTO("Company", "VARCHAR(80)"),
-                                                                                           new ColumnMetaDTO("Address", "VARCHAR(70)"),
-                                                                                           new ColumnMetaDTO("City", "VARCHAR(40)"),
-                                                                                           new ColumnMetaDTO("Country", "VARCHAR(40)"),
-                                                                                           new ColumnMetaDTO("PostalCode", "VARCHAR(10)"),
-                                                                                           new ColumnMetaDTO("Phone", "VARCHAR(24)"),
-                                                                                           new ColumnMetaDTO("Fax", "VARCHAR(24)"),
-                                                                                           new ColumnMetaDTO("Email", "VARCHAR(60)"),
-                                                                                           new ColumnMetaDTO("SupportRepId", "int4")
+        tablesDao.createTable(new TableMetaDto("Customer", 12, "CustomerId", Arrays.asList(new ColumnMetaDto("CustomerId", "int4"),
+                                                                                           new ColumnMetaDto("FirstName", "VARCHAR(40)"),
+                                                                                           new ColumnMetaDto("LastName", "VARCHAR(20)"),
+                                                                                           new ColumnMetaDto("Company", "VARCHAR(80)"),
+                                                                                           new ColumnMetaDto("Address", "VARCHAR(70)"),
+                                                                                           new ColumnMetaDto("City", "VARCHAR(40)"),
+                                                                                           new ColumnMetaDto("Country", "VARCHAR(40)"),
+                                                                                           new ColumnMetaDto("PostalCode", "VARCHAR(10)"),
+                                                                                           new ColumnMetaDto("Phone", "VARCHAR(24)"),
+                                                                                           new ColumnMetaDto("Fax", "VARCHAR(24)"),
+                                                                                           new ColumnMetaDto("Email", "VARCHAR(60)"),
+                                                                                           new ColumnMetaDto("SupportRepId", "int4")
         )));
     }
 
     @Test
     void testCreateTable_Artist() throws SQLException {
-        tablesDao.createTable(new TableMetaDto("Artist", 3, "id", Arrays.asList(new ColumnMetaDTO("id", "int4"),
-                                                                                new ColumnMetaDTO("name", "varchar"),
-                                                                                new ColumnMetaDTO("age", "int4")
+        tablesDao.createTable(new TableMetaDto("Artist", 3, "id", Arrays.asList(new ColumnMetaDto("id", "int4"),
+                                                                                new ColumnMetaDto("name", "varchar"),
+                                                                                new ColumnMetaDto("age", "int4")
         )));
     }
 
     @Test
     void testCreateTable_CustomerLaLa() throws SQLException {
-        tablesDao.createTable(new TableMetaDto("CustomerЛАЛА", 12, "CustomerId", Arrays.asList(new ColumnMetaDTO("CustomerId", "int4"),
-                                                                                               new ColumnMetaDTO("FirstName", "VARCHAR(40)"),
-                                                                                               new ColumnMetaDTO("LastName", "VARCHAR(20)"),
-                                                                                               new ColumnMetaDTO("Company", "VARCHAR(80)"),
-                                                                                               new ColumnMetaDTO("Address", "VARCHAR(70)"),
-                                                                                               new ColumnMetaDTO("City", "VARCHAR(40)"),
-                                                                                               new ColumnMetaDTO("Country", "VARCHAR(40)"),
-                                                                                               new ColumnMetaDTO("PostalCode", "VARCHAR(10)"),
-                                                                                               new ColumnMetaDTO("Phone", "VARCHAR(24)"),
-                                                                                               new ColumnMetaDTO("Fax", "VARCHAR(24)"),
-                                                                                               new ColumnMetaDTO("Email", "VARCHAR(60)"),
-                                                                                               new ColumnMetaDTO("SupportRepId", "int4")
+        tablesDao.createTable(new TableMetaDto("CustomerЛАЛА", 12, "CustomerId", Arrays.asList(new ColumnMetaDto("CustomerId", "int4"),
+                                                                                               new ColumnMetaDto("FirstName", "VARCHAR(40)"),
+                                                                                               new ColumnMetaDto("LastName", "VARCHAR(20)"),
+                                                                                               new ColumnMetaDto("Company", "VARCHAR(80)"),
+                                                                                               new ColumnMetaDto("Address", "VARCHAR(70)"),
+                                                                                               new ColumnMetaDto("City", "VARCHAR(40)"),
+                                                                                               new ColumnMetaDto("Country", "VARCHAR(40)"),
+                                                                                               new ColumnMetaDto("PostalCode", "VARCHAR(10)"),
+                                                                                               new ColumnMetaDto("Phone", "VARCHAR(24)"),
+                                                                                               new ColumnMetaDto("Fax", "VARCHAR(24)"),
+                                                                                               new ColumnMetaDto("Email", "VARCHAR(60)"),
+                                                                                               new ColumnMetaDto("SupportRepId", "int4")
         )));
     }
 
     @Test
     void testCreateTable_Artists() throws SQLException {
         assertThrows(SQLException.class,
-                     () -> tablesDao.createTable(new TableMetaDto("Artists", 3, "zoo", Arrays.asList(new ColumnMetaDTO("id", "int4"),
-                                                                                                     new ColumnMetaDTO("name", "varchar"),
-                                                                                                     new ColumnMetaDTO("age", "int4")
+                     () -> tablesDao.createTable(new TableMetaDto("Artists", 3, "zoo", Arrays.asList(new ColumnMetaDto("id", "int4"),
+                                                                                                     new ColumnMetaDto("name", "varchar"),
+                                                                                                     new ColumnMetaDto("age", "int4")
                      ))));
     }
 
@@ -94,7 +94,7 @@ class TablesRepositoryTest {
                                            .collect(Collectors.toSet());
 
         List<TableMetaDto> tablesMeta = tableNames.stream()
-                                                  .map(name -> new TableMetaDto(name, 1, "id", Arrays.asList(new ColumnMetaDTO("id", "int4"))))
+                                                  .map(name -> new TableMetaDto(name, 1, "id", Arrays.asList(new ColumnMetaDto("id", "int4"))))
                                                   .collect(Collectors.toList());
 
         for (TableMetaDto tableMeta : tablesMeta) {
@@ -122,34 +122,34 @@ class TablesRepositoryTest {
         tablesDao.createTable(new TableMetaDto(tableName + "1",
                                                12,
                                                "CustomerId",
-                                               Arrays.asList(new ColumnMetaDTO("CustomerId", "int"),
-                                                             new ColumnMetaDTO("FirstName", "VARCHAR(40)"),
-                                                             new ColumnMetaDTO("LastName", "VARCHAR(20)"),
-                                                             new ColumnMetaDTO("Company", "VARCHAR(80)"),
-                                                             new ColumnMetaDTO("Address", "VARCHAR(70)"),
-                                                             new ColumnMetaDTO("City", "VARCHAR(40)"),
-                                                             new ColumnMetaDTO("Country", "VARCHAR(40)"),
-                                                             new ColumnMetaDTO("PostalCode", "VARCHAR(10)"),
-                                                             new ColumnMetaDTO("Phone", "VARCHAR(24)"),
-                                                             new ColumnMetaDTO("Fax", "VARCHAR(24)"),
-                                                             new ColumnMetaDTO("Email", "VARCHAR(60)"),
-                                                             new ColumnMetaDTO("SupportRepId", "int4"))));
+                                               Arrays.asList(new ColumnMetaDto("CustomerId", "int"),
+                                                             new ColumnMetaDto("FirstName", "VARCHAR(40)"),
+                                                             new ColumnMetaDto("LastName", "VARCHAR(20)"),
+                                                             new ColumnMetaDto("Company", "VARCHAR(80)"),
+                                                             new ColumnMetaDto("Address", "VARCHAR(70)"),
+                                                             new ColumnMetaDto("City", "VARCHAR(40)"),
+                                                             new ColumnMetaDto("Country", "VARCHAR(40)"),
+                                                             new ColumnMetaDto("PostalCode", "VARCHAR(10)"),
+                                                             new ColumnMetaDto("Phone", "VARCHAR(24)"),
+                                                             new ColumnMetaDto("Fax", "VARCHAR(24)"),
+                                                             new ColumnMetaDto("Email", "VARCHAR(60)"),
+                                                             new ColumnMetaDto("SupportRepId", "int4"))));
 
         tablesDao.createTable(new TableMetaDto(tableName + "2",
                                                12,
                                                "CustomerId",
-                                               Arrays.asList(new ColumnMetaDTO("CustomerId", "int4"),
-                                                             new ColumnMetaDTO("FirstName", "VARCHAR(40)"),
-                                                             new ColumnMetaDTO("LastName", "VARCHAR(20)"),
-                                                             new ColumnMetaDTO("Company", "VARCHAR(80)"),
-                                                             new ColumnMetaDTO("Address", "VARCHAR(70)"),
-                                                             new ColumnMetaDTO("Active", "tinyint"),
-                                                             new ColumnMetaDTO("age", "smallint"),
-                                                             new ColumnMetaDTO("score", "bigint"),
-                                                             new ColumnMetaDTO("AMOUNT", "numeric"),
-                                                             new ColumnMetaDTO("birthday", "date"),
-                                                             new ColumnMetaDTO("arrived", "timestamp"),
-                                                             new ColumnMetaDTO("daystart", "time"))));
+                                               Arrays.asList(new ColumnMetaDto("CustomerId", "int4"),
+                                                             new ColumnMetaDto("FirstName", "VARCHAR(40)"),
+                                                             new ColumnMetaDto("LastName", "VARCHAR(20)"),
+                                                             new ColumnMetaDto("Company", "VARCHAR(80)"),
+                                                             new ColumnMetaDto("Address", "VARCHAR(70)"),
+                                                             new ColumnMetaDto("Active", "tinyint"),
+                                                             new ColumnMetaDto("age", "smallint"),
+                                                             new ColumnMetaDto("score", "bigint"),
+                                                             new ColumnMetaDto("AMOUNT", "numeric"),
+                                                             new ColumnMetaDto("birthday", "date"),
+                                                             new ColumnMetaDto("arrived", "timestamp"),
+                                                             new ColumnMetaDto("daystart", "time"))));
 
         // When
         TableMetaDto result_ = tablesDao.findTableMeta(tableName);
@@ -203,7 +203,7 @@ class TablesRepositoryTest {
                                           .collect(Collectors.toSet());
 
         List<TableMetaDto> tablesMeta = tableNames.stream()
-                                                  .map(name -> new TableMetaDto(name, 1, "id", Arrays.asList(new ColumnMetaDTO("id", "int4"))))
+                                                  .map(name -> new TableMetaDto(name, 1, "id", Arrays.asList(new ColumnMetaDto("id", "int4"))))
                                                   .collect(Collectors.toList());
 
         for (TableMetaDto tableMeta : tablesMeta) {

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ColumnMetaDTO {
+public class ColumnMetaDto {
 
     private String title;
     private String type;

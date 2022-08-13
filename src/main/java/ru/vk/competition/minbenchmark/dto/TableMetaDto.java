@@ -15,5 +15,5 @@ public class TableMetaDto {
     private String tableName;
     private int columnsAmount;
     private String primaryKey;
-    private List<ColumnMetaDTO> columnInfos;
+    private List<ColumnMetaDto> columnInfos;
 }

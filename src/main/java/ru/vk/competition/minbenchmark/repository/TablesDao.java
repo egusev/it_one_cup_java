@@ -4,18 +4,16 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import lombok.extern.slf4j.Slf4j;
-import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.vk.competition.minbenchmark.dto.ColumnMetaDTO;
+import ru.vk.competition.minbenchmark.dto.ColumnMetaDto;
 import ru.vk.competition.minbenchmark.dto.TableMetaDto;
 import ru.vk.competition.minbenchmark.utils.TypeSerializer;
 
@@ -32,10 +30,10 @@ public class TablesDao {
         StringBuilder query = new StringBuilder("CREATE TABLE ");
         query.append(tableMetaDto.getTableName());
         query.append(" (");
-        for (ColumnMetaDTO columnMetaDTO : tableMetaDto.getColumnInfos()) {
-            query.append(columnMetaDTO.getTitle());
+        for (ColumnMetaDto columnMetaDto : tableMetaDto.getColumnInfos()) {
+            query.append(columnMetaDto.getTitle());
             query.append(' ');
-            query.append(columnMetaDTO.getType());
+            query.append(columnMetaDto.getType());
             query.append(',');
         }
         query.append("PRIMARY KEY (");
@@ -101,7 +99,7 @@ public class TablesDao {
                     String columnName = rs.getString("COLUMN_NAME");
                     int columnSize = rs.getInt("COLUMN_SIZE");
                     int datatype = rs.getInt("DATA_TYPE");
-                    tableMetaDto.getColumnInfos().add(new ColumnMetaDTO(columnName, TypeSerializer.serialize(datatype, columnSize)));
+                    tableMetaDto.getColumnInfos().add(new ColumnMetaDto(columnName, TypeSerializer.serialize(datatype, columnSize)));
                 }
             }
             tableMetaDto.setColumnsAmount(tableMetaDto.getColumnInfos().size());
