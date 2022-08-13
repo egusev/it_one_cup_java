@@ -20,7 +20,7 @@ import ru.vk.competition.minbenchmark.service.TablesService;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/table")
+@RequestMapping("/api/table-query")
 @RequiredArgsConstructor
 public class TableQueriesController {
 
