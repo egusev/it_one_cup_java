@@ -3,6 +3,7 @@ package ru.vk.competition.minbenchmark.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -36,7 +37,7 @@ public class TablesController {
             log.info("table created");
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (IllegalArgumentException iae) {
-            log.info("failed create table: {}", iae.getMessage());
+            log.info("failed create table: {}", ExceptionUtils.getRootCause(iae).getMessage());
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
     }
@@ -57,7 +58,7 @@ public class TablesController {
             log.info("table {} deleted", name);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (IllegalArgumentException iae) {
-            log.info("couldn't delete table {}: {}", name, iae.getMessage());
+            log.info("couldn't delete table {}: {}", name, ExceptionUtils.getRootCause(iae).getMessage());
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
@@ -72,8 +73,7 @@ public class TablesController {
         }
         if (tableMetaDto.getColumnInfos() == null) {
             return false;
-        }
-        else if (tableMetaDto.getColumnInfos().size() != tableMetaDto.getColumnsAmount()) {
+        } else if (tableMetaDto.getColumnInfos().size() != tableMetaDto.getColumnsAmount()) {
             return false;
         }
 

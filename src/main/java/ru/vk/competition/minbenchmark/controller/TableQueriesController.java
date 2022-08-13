@@ -6,6 +6,7 @@ import javax.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,7 @@ public class TableQueriesController {
             tableQueriesService.create(tableQueryDto);
             log.info("table query created");
         } catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
+            log.info(ExceptionUtils.getRootCause(iae).getMessage());
             log.debug(iae.getMessage(), iae);
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -84,7 +85,7 @@ public class TableQueriesController {
             tableQueriesService.update(tableQueryDto);
             log.info("table query updated");
         } catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
+            log.info(ExceptionUtils.getRootCause(iae).getMessage());
             log.debug(iae.getMessage(), iae);
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -103,7 +104,7 @@ public class TableQueriesController {
             tableQueriesService.delete(id);
             log.info("table query deleted");
         } catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
+            log.info(ExceptionUtils.getRootCause(iae).getMessage());
             log.debug(iae.getMessage(), iae);
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -170,9 +171,8 @@ public class TableQueriesController {
         try {
             tableQueriesService.execute(id);
             log.info("Table query execution passed");
-        }
-        catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
+        } catch (IllegalArgumentException iae) {
+            log.info(ExceptionUtils.getRootCause(iae).getMessage());
             log.debug(iae.getMessage(), iae);
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }

@@ -5,6 +5,7 @@ import javax.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class SingleQueriesController {
             singleQueriesService.create(queryDto);
             log.info("query created");
         } catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
+            log.info(ExceptionUtils.getRootCause(iae).getMessage());
             log.debug(iae.getMessage(), iae);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
@@ -65,7 +66,7 @@ public class SingleQueriesController {
             singleQueriesService.update(queryDto);
             log.info("query updated");
         } catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
+            log.info(ExceptionUtils.getRootCause(iae).getMessage());
             log.debug(iae.getMessage(), iae);
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -84,7 +85,7 @@ public class SingleQueriesController {
             singleQueriesService.delete(id);
             log.info("query deleted");
         } catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
+            log.info(ExceptionUtils.getRootCause(iae).getMessage());
             log.debug(iae.getMessage(), iae);
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -133,7 +134,7 @@ public class SingleQueriesController {
             singleQueriesService.execute(id);
             log.info("Query execution passed");
         } catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
+            log.info(ExceptionUtils.getRootCause(iae).getMessage());
             log.debug(iae.getMessage(), iae);
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
