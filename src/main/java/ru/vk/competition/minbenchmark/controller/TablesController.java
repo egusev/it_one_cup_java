@@ -42,7 +42,7 @@ public class TablesController {
         return new ResponseEntity<>(tableMeta, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "drop-table-by-name/{name}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "drop-table/{name}", method = RequestMethod.DELETE)
     public ResponseEntity deleteTable(@PathVariable("name") String name) {
         try {
             tablesService.deleteTable(name);
