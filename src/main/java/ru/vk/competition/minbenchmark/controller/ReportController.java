@@ -32,7 +32,6 @@ public class ReportController {
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        // todo
         try {
             reportService.createReport(reportDto);
             log.info("report created");
