@@ -1,6 +1,7 @@
 package ru.vk.competition.minbenchmark.repository;
 
 import java.sql.SQLException;
+import java.util.Map;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,22 @@ public class QueriesDao {
         }
     }
 
+    public Map<String, Object> queryForMap(String query) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        try {
+            Map<String, Object> result = jdbcTemplate.queryForMap(query);
+            log.info("Executed query {}", query);
+            return result;
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            log.debug(e.getMessage(), e);
+
+            if (e instanceof SQLException) {
+                throw e;
+            } else {
+                throw new SQLException(e);
+            }
+        }
+    }
 }
