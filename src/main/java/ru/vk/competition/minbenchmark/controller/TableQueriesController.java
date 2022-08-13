@@ -35,18 +35,21 @@ public class TableQueriesController {
      */
     @RequestMapping(value = "add-new-query-to-table", method = RequestMethod.POST)
     public ResponseEntity createQuery(@RequestBody TableQueryDto tableQueryDto) {
+        log.info("POST /api/table-query/add-new-query-to-table {} in {}", tableQueryDto.getQueryId(), tableQueryDto.getTableName());
 
         if (!validate(tableQueryDto)) {
+            log.info("invalid dto");
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
         if (tablesService.findTableMeta(tableQueryDto.getTableName()) == null) {
-            // table doesn't exist
+            log.info("table doesn't exist");
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
         try {
             tableQueriesService.create(tableQueryDto);
+            log.info("table query created");
         } catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());
             log.debug(iae.getMessage(), iae);
@@ -61,17 +64,20 @@ public class TableQueriesController {
      */
     @RequestMapping(value = "modify-query-in-table", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody TableQueryDto tableQueryDto) {
+        log.info("PUT /api/table-query/modify-query-in-table {} in {}", tableQueryDto.getQueryId(), tableQueryDto.getTableName());
 
         if (!validate(tableQueryDto)) {
+            log.info("invalid dto");
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
         if (tablesService.findTableMeta(tableQueryDto.getTableName()) == null) {
-            // table doesn't exist
+            log.info("table doesn't exist");
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
         try {
             tableQueriesService.update(tableQueryDto);
+            log.info("table query updated");
         } catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());
             log.debug(iae.getMessage(), iae);
@@ -86,8 +92,11 @@ public class TableQueriesController {
      */
     @RequestMapping(value = "delete-table-query-by-id/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") int id) {
+        log.info("DELETE /api/table-query/delete-table-query-by-id/{}", id);
+
         try {
             tableQueriesService.delete(id);
+            log.info("table query deleted");
         } catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());
             log.debug(iae.getMessage(), iae);
@@ -101,7 +110,11 @@ public class TableQueriesController {
      */
     @RequestMapping(value = "get-table-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<TableQueryDto> get(@PathVariable("id") int queryId) {
+        log.info("GET /api/table-query/get-table-query-by-id/{}", queryId);
+
         TableQueryDto tableQueryDto = tableQueriesService.getById(queryId);
+        log.info("table query found {}", tableQueryDto != null);
+
         if (tableQueryDto == null) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
@@ -114,13 +127,18 @@ public class TableQueriesController {
      */
     @RequestMapping(value = "get-all-queries-by-table-name/{name}", method = RequestMethod.GET)
     public ResponseEntity<List<TableQueryDto>> get(@PathVariable("name") String tableName) {
+        log.info("GET /api/table-query/get-all-queries-by-table-name/{}", tableName);
 
         if (tablesService.findTableMeta(tableName) == null) {
-            // table doesn't exist
+            log.info("table doesn't exist");
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(tableQueriesService.getByTableName(tableName), HttpStatus.OK);
+        List<TableQueryDto> tableQueries = tableQueriesService.getByTableName(tableName);
+
+        log.info("Found {} table queries", tableQueries.size());
+
+        return new ResponseEntity<>(tableQueries, HttpStatus.OK);
     }
 
     /**
@@ -128,7 +146,13 @@ public class TableQueriesController {
      */
     @RequestMapping(value = "get-all-table-queries", method = RequestMethod.GET)
     public List<TableQueryDto> getAll() {
-        return tableQueriesService.getAll();
+        log.info("GET /api/table-query/get-all-table-queries");
+
+        List<TableQueryDto> tableQueries = tableQueriesService.getAll();
+
+        log.info("Found {} table queries", tableQueries.size());
+
+        return tableQueries;
     }
 
     /**
@@ -136,8 +160,11 @@ public class TableQueriesController {
      */
     @RequestMapping(value = "execute-table-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity execute(@PathVariable("id") int id) {
+        log.info("GET /api/table-query/execute-table-query-by-id/{}", id);
+
         try {
             tableQueriesService.execute(id);
+            log.info("Table query execution passed");
         }
         catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());

@@ -30,13 +30,16 @@ public class SingleQueriesController {
      */
     @RequestMapping(value = "add-new-query", method = RequestMethod.POST)
     public ResponseEntity createQuery(@RequestBody QueryDto queryDto) {
+        log.info("POST /api/single-query/add-new-query {}", queryDto.getQueryId());
 
         if (!validate(queryDto)) {
+            log.info("invalid dto");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         try {
             singleQueriesService.create(queryDto);
+            log.info("query created");
         } catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());
             log.debug(iae.getMessage(), iae);
@@ -49,15 +52,18 @@ public class SingleQueriesController {
     /**
      * Изменение запроса таблицы
      */
-    @RequestMapping(value = "modify-query ", method = RequestMethod.PUT)
+    @RequestMapping(value = "modify-query", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody QueryDto queryDto) {
+        log.info("PUT /api/single-query/modify-query {}", queryDto.getQueryId());
 
         if (!validate(queryDto)) {
+            log.info("invalid dto");
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
         try {
             singleQueriesService.update(queryDto);
+            log.info("query updated");
         } catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());
             log.debug(iae.getMessage(), iae);
@@ -72,8 +78,11 @@ public class SingleQueriesController {
      */
     @RequestMapping(value = "delete-single-query-by-id/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") int id) {
+        log.info("DELETE /api/single-query/delete-single-query-by-id/{}", id);
+
         try {
             singleQueriesService.delete(id);
+            log.info("query deleted");
         } catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());
             log.debug(iae.getMessage(), iae);
@@ -87,11 +96,15 @@ public class SingleQueriesController {
      */
     @RequestMapping(value = "get-single-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<QueryDto> get(@PathVariable("id") int queryId) {
-        QueryDto tableQueryDto = singleQueriesService.getById(queryId);
-        if (tableQueryDto == null) {
+        log.info("GET /api/single-query/get-single-query-by-id/{}", queryId);
+
+        QueryDto queryDto = singleQueriesService.getById(queryId);
+        log.info("query found {}", queryDto != null);
+
+        if (queryDto == null) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            return new ResponseEntity<>(tableQueryDto, HttpStatus.OK);
+            return new ResponseEntity<>(queryDto, HttpStatus.OK);
         }
     }
 
@@ -100,7 +113,13 @@ public class SingleQueriesController {
      */
     @RequestMapping(value = "get-all-single-queries", method = RequestMethod.GET)
     public List<QueryDto> getAll() {
-        return singleQueriesService.getAll();
+        log.info("GET /api/single-query/get-all-single-queries");
+
+        List<QueryDto> queries = singleQueriesService.getAll();
+
+        log.info("Found {} queries", queries.size());
+
+        return queries;
     }
 
     /**
@@ -108,8 +127,11 @@ public class SingleQueriesController {
      */
     @RequestMapping(value = "execute-single-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity execute(@PathVariable("id") int id) {
+        log.info("GET /api/single-query/execute-single-query-by-id/{}", id);
+
         try {
             singleQueriesService.execute(id);
+            log.info("Query execution passed");
         } catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());
             log.debug(iae.getMessage(), iae);
