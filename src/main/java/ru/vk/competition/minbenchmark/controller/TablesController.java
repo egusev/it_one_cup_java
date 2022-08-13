@@ -24,31 +24,40 @@ public class TablesController {
 
     @RequestMapping(value = "create-table", method = RequestMethod.POST)
     public ResponseEntity createTable(@Validated @RequestBody TableMetaDto tableMetaDto) {
+        log.info("POST /api/table/create-table {}", tableMetaDto.getTableName());
 
         if (!validate(tableMetaDto)) {
+            log.info("invalid meta");
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
         try {
             tablesService.createTable(tableMetaDto);
+            log.info("table created");
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (IllegalArgumentException iae) {
+            log.info("failed create table: {}", iae.getMessage());
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
     @RequestMapping(value = "get-table-by-name/{name}", method = RequestMethod.GET)
     public ResponseEntity<TableMetaDto> getTable(@PathVariable("name") String name) {
+        log.info("GET /api/table/get-table-by-name/{}", name);
         TableMetaDto tableMeta = tablesService.findTableMeta(name);
+        log.info("found {}", tableMeta != null);
         return new ResponseEntity<>(tableMeta, HttpStatus.OK);
     }
 
     @RequestMapping(value = "drop-table/{name}", method = RequestMethod.DELETE)
     public ResponseEntity deleteTable(@PathVariable("name") String name) {
+        log.info("DELETE /api/table/drop-table/{}", name);
         try {
             tablesService.deleteTable(name);
+            log.info("table {} deleted", name);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (IllegalArgumentException iae) {
+            log.info("couldn't delete table {}: {}", name, iae.getMessage());
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
