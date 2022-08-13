@@ -42,10 +42,12 @@ public class TableQueriesController {
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
+/*
         if (tablesService.findTableMeta(tableQueryDto.getTableName()) == null) {
             log.info("table doesn't exist");
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
+*/
 
         try {
             tableQueriesService.create(tableQueryDto);
@@ -71,10 +73,13 @@ public class TableQueriesController {
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
 
+/*
         if (tablesService.findTableMeta(tableQueryDto.getTableName()) == null) {
             log.info("table doesn't exist");
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
+*/
+
         try {
             tableQueriesService.update(tableQueryDto);
             log.info("table query updated");
