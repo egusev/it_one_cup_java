@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vk.competition.minbenchmark.dto.ColumnMetaDto;
 import ru.vk.competition.minbenchmark.dto.TableMetaDto;
+import ru.vk.competition.minbenchmark.service.TableQueriesService;
 import ru.vk.competition.minbenchmark.service.TablesService;
 import ru.vk.competition.minbenchmark.utils.Loggable;
 
@@ -29,6 +30,8 @@ public class TablesController {
                                                                      "VARCHAR\\(\\d+\\)", "CHARACTER VARYING");
 
     private final TablesService tablesService;
+
+    private final TableQueriesService tableQueriesService;
 
     @Loggable
     @RequestMapping(value = "create-table", method = RequestMethod.POST)
@@ -78,13 +81,13 @@ public class TablesController {
         log.info("DELETE /api/table/drop-table/{}", name);
         try {
             tablesService.deleteTable(name);
-            log.info("table {} deleted", name);
+            int deletedQueries = tableQueriesService.delete(name);
+            log.info("table {} deleted with {} queries", name, deletedQueries);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (IllegalArgumentException iae) {
             log.info("couldn't delete table {}: {}", name, ExceptionUtils.getRootCause(iae).getMessage());
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
-
     }
 
     private boolean validate(TableMetaDto tableMetaDto) {

@@ -21,6 +21,8 @@ public interface TableQueriesService {
     List<TableQueryDto> getByTableName(@NotNull String tableName);
 
     void delete(int id) throws IllegalArgumentException;
+
+    int delete(String tableName);
     
     void execute(int id) throws IllegalArgumentException;
 

@@ -78,6 +78,18 @@ public class TableQueriesServiceImpl implements TableQueriesService {
     }
 
     @Override
+    public int delete(String tableName) {
+        Set<Integer> ids = tableNameToIds.remove(tableName);
+        if (ids == null) {
+            return 0;
+        }
+
+        ids.forEach(idToTableQueryMap::remove);
+
+        return ids.size();
+    }
+
+    @Override
     public void execute(int id) throws IllegalArgumentException {
         TableQueryDto tableQueryDto = idToTableQueryMap.get(id);
 
