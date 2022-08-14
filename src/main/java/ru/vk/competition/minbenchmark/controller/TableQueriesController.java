@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.vk.competition.minbenchmark.dto.TableQueryDto;
 import ru.vk.competition.minbenchmark.service.TableQueriesService;
 import ru.vk.competition.minbenchmark.service.TablesService;
+import ru.vk.competition.minbenchmark.utils.Loggable;
 
 @Slf4j
 @RestController
@@ -34,6 +35,7 @@ public class TableQueriesController {
     /**
      * Создание нового запроса таблицы
      */
+    @Loggable
     @RequestMapping(value = "add-new-query-to-table", method = RequestMethod.POST)
     public ResponseEntity createQuery(@RequestBody TableQueryDto tableQueryDto) {
         log.info("POST /api/table-query/add-new-query-to-table {} in {}", tableQueryDto.getQueryId(), tableQueryDto.getTableName());
@@ -65,6 +67,7 @@ public class TableQueriesController {
     /**
      * Изменение запроса таблицы
      */
+    @Loggable
     @RequestMapping(value = "modify-query-in-table", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody TableQueryDto tableQueryDto) {
         log.info("PUT /api/table-query/modify-query-in-table {} in {}", tableQueryDto.getQueryId(), tableQueryDto.getTableName());
@@ -96,6 +99,7 @@ public class TableQueriesController {
     /**
      * Удаление запроса таблицы
      */
+    @Loggable
     @RequestMapping(value = "delete-table-query-by-id/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") int id) {
         log.info("DELETE /api/table-query/delete-table-query-by-id/{}", id);
@@ -114,6 +118,7 @@ public class TableQueriesController {
     /**
      * Получение запроса таблицы по id
      */
+    @Loggable
     @RequestMapping(value = "get-table-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<TableQueryDto> get(@PathVariable("id") int queryId) {
         log.info("GET /api/table-query/get-table-query-by-id/{}", queryId);
@@ -131,6 +136,7 @@ public class TableQueriesController {
     /**
      * Получение всех запросов таблицы
      */
+    @Loggable
     @RequestMapping(value = "get-all-queries-by-table-name/{name}", method = RequestMethod.GET)
     public ResponseEntity<List<TableQueryDto>> get(@PathVariable("name") String tableName) {
         log.info("GET /api/table-query/get-all-queries-by-table-name/{}", tableName);
@@ -150,6 +156,7 @@ public class TableQueriesController {
     /**
      * Получение всех запросов
      */
+    @Loggable
     @RequestMapping(value = "get-all-table-queries", method = RequestMethod.GET)
     public List<TableQueryDto> getAll() {
         log.info("GET /api/table-query/get-all-table-queries");
@@ -164,6 +171,7 @@ public class TableQueriesController {
     /**
      * Запуск запроса таблицы
      */
+    @Loggable
     @RequestMapping(value = "execute-table-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity execute(@PathVariable("id") int id) {
         log.info("GET /api/table-query/execute-table-query-by-id/{}", id);
@@ -184,15 +192,19 @@ public class TableQueriesController {
             return false;
         }
         if (StringUtils.isBlank(tableQueryDto.getQuery())) {
+            log.info("Query is empty");
             return false;
         }
         if (tableQueryDto.getQuery().length() > 120) {
+            log.info("Query is too long: {}", tableQueryDto.getQuery().length());
             return false;
         }
         if (StringUtils.isBlank(tableQueryDto.getTableName())) {
+            log.info("Query table is empty");
             return false;
         }
         if (tableQueryDto.getTableName().length() > 50) {
+            log.info("Query table is too long: {}", tableQueryDto.getTableName().length());
             return false;
         }
         return true;

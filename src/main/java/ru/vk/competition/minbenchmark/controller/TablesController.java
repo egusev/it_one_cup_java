@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.vk.competition.minbenchmark.dto.ColumnMetaDto;
 import ru.vk.competition.minbenchmark.dto.TableMetaDto;
 import ru.vk.competition.minbenchmark.service.TablesService;
+import ru.vk.competition.minbenchmark.utils.Loggable;
 
 @Slf4j
 @RestController
@@ -29,6 +30,7 @@ public class TablesController {
 
     private final TablesService tablesService;
 
+    @Loggable
     @RequestMapping(value = "create-table", method = RequestMethod.POST)
     public ResponseEntity createTable(@Validated @RequestBody TableMetaDto tableMetaDto) {
         log.info("POST /api/table/create-table {}", tableMetaDto.getTableName());
@@ -54,6 +56,7 @@ public class TablesController {
         }
     }
 
+    @Loggable
     @RequestMapping(value = "get-table-by-name/{name}", method = RequestMethod.GET)
     public ResponseEntity<TableMetaDto> getTable(@PathVariable("name") String name) {
         log.info("GET /api/table/get-table-by-name/{}", name);
@@ -69,6 +72,7 @@ public class TablesController {
         return new ResponseEntity<>(tableMeta, HttpStatus.OK);
     }
 
+    @Loggable
     @RequestMapping(value = "drop-table/{name}", method = RequestMethod.DELETE)
     public ResponseEntity deleteTable(@PathVariable("name") String name) {
         log.info("DELETE /api/table/drop-table/{}", name);

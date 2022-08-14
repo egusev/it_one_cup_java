@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vk.competition.minbenchmark.dto.ReportDto;
 import ru.vk.competition.minbenchmark.service.ReportService;
+import ru.vk.competition.minbenchmark.utils.Loggable;
 
 @Slf4j
 @RestController
@@ -23,6 +24,7 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
+    @Loggable
     @RequestMapping(value = "create-report", method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody ReportDto reportDto) {
         log.info("POST /api/report/create-report {}", reportDto.getReportId());
@@ -44,6 +46,7 @@ public class ReportController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @Loggable
     @RequestMapping(value = "get-report-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<ReportDto> get(@PathVariable("id") int id) {
         log.info("POST /api/report/get-report-by-id/{}", id);

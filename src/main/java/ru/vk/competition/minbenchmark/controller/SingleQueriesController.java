@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vk.competition.minbenchmark.dto.QueryDto;
 import ru.vk.competition.minbenchmark.service.SingleQueriesService;
+import ru.vk.competition.minbenchmark.utils.Loggable;
 
 @Slf4j
 @RestController
@@ -29,6 +30,7 @@ public class SingleQueriesController {
     /**
      * Создание нового запроса таблицы
      */
+    @Loggable
     @RequestMapping(value = "add-new-query", method = RequestMethod.POST)
     public ResponseEntity createQuery(@RequestBody QueryDto queryDto) {
         log.info("POST /api/single-query/add-new-query {}", queryDto.getQueryId());
@@ -53,6 +55,7 @@ public class SingleQueriesController {
     /**
      * Изменение запроса таблицы
      */
+    @Loggable
     @RequestMapping(value = "modify-query", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody QueryDto queryDto) {
         log.info("PUT /api/single-query/modify-query {}", queryDto.getQueryId());
@@ -77,6 +80,7 @@ public class SingleQueriesController {
     /**
      * Удаление запроса таблицы
      */
+    @Loggable
     @RequestMapping(value = "delete-single-query-by-id/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") int id) {
         log.info("DELETE /api/single-query/delete-single-query-by-id/{}", id);
@@ -95,6 +99,7 @@ public class SingleQueriesController {
     /**
      * Получение запроса таблицы по id
      */
+    @Loggable
     @RequestMapping(value = "get-single-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<QueryDto> get(@PathVariable("id") int queryId) {
         log.info("GET /api/single-query/get-single-query-by-id/{}", queryId);
@@ -112,6 +117,7 @@ public class SingleQueriesController {
     /**
      * Получение всех запросов
      */
+    @Loggable
     @RequestMapping(value = "get-all-single-queries", method = RequestMethod.GET)
     public List<QueryDto> getAll() {
         log.info("GET /api/single-query/get-all-single-queries");
@@ -126,6 +132,7 @@ public class SingleQueriesController {
     /**
      * Запуск запроса таблицы
      */
+    @Loggable
     @RequestMapping(value = "execute-single-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity execute(@PathVariable("id") int id) {
         log.info("GET /api/single-query/execute-single-query-by-id/{}", id);

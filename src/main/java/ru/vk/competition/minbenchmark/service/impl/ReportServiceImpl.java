@@ -92,6 +92,8 @@ public class ReportServiceImpl implements ReportService {
                 throw new IllegalArgumentException("Missed table name in the request");
             }
 
+            log.info("Process {}", tableName);
+
             TableMetaDto tableMeta = tablesService.findTableMeta(tableName);
             Map<String, ColumnMetaDto> nameToColumn = tableMeta.getColumnInfos()
                                                                .stream()

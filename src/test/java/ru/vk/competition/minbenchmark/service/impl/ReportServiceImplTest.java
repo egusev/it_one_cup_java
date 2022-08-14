@@ -2,10 +2,12 @@ package ru.vk.competition.minbenchmark.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Map;
+import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -98,5 +100,14 @@ class ReportServiceImplTest {
 
         queriesDao.execute("drop table test");
         queriesDao.execute("drop table basa");
+    }
+
+    @Test
+    public void testExecuteReport_fail() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> reportService.createReport(new ReportDto(1, 2, Arrays.asList(new TableReportDto(RandomString.make(),
+                                                                                                  Arrays.asList(new ColumnMetaDto("id", "int4", null))))))
+        );
     }
 }
