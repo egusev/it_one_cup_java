@@ -95,6 +95,13 @@ public class ReportServiceImpl implements ReportService {
             log.info("Process {}", tableName);
 
             TableMetaDto tableMeta = tablesService.findTableMeta(tableName);
+
+            if (tableMeta == null) {
+                throw new IllegalArgumentException("Table " + tableName + " doesn't exist");
+            }
+
+            log.info("Table meta {}", tableMeta);
+
             Map<String, ColumnMetaDto> nameToColumn = tableMeta.getColumnInfos()
                                                                .stream()
                                                                .collect(Collectors.toMap(ColumnMetaDto::getTitle, c -> c));
