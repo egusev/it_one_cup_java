@@ -155,6 +155,10 @@ public class SingleQueriesController {
         if (StringUtils.isBlank(queryDto.getQuery())) {
             return false;
         }
+        if (queryDto.getQuery().length() > 120) {
+            return false;
+        }
+
         return true;
     }
 }
