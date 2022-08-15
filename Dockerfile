@@ -1,15 +1,10 @@
-FROM maven:3-openjdk-17
-RUN microdnf install jq unzip
+FROM openjdk:11
 
-ENV MOUNT_POINT="/opt/mount-point"
-ENV SOLUTION_CODE_PATH="/opt/client/solution"
-ENV COMPILE_LOG_LOCATION="/opt/client/compile.json"
-COPY . $SOLUTION_CODE_PATH
+RUN mkdir /opt/results
 
-WORKDIR $SOLUTION_CODE_PATH
+RUN mkdir /app
+WORKDIR /app
+COPY target/minbenchmark-0.0.1-SNAPSHOT.jar /app/minbenchmark-3.jar
 EXPOSE 9081
-CMD ["bash", "entrypoint.sh"]
 
-RUN mvn package && rm -rf target
-
-
+ENTRYPOINT ["java", "-jar", "/app/minbenchmark-3.jar"]
