@@ -36,7 +36,7 @@ public class TablesController {
     @Loggable
     @RequestMapping(value = "create-table", method = RequestMethod.POST)
     public ResponseEntity createTable(@Validated @RequestBody TableMetaDto tableMetaDto) {
-        log.info("POST /api/table/create-table {}", tableMetaDto.getTableName());
+        log.info("{}: {}", tableMetaDto.getTableName(), tableMetaDto);
 
         if (!validate(tableMetaDto)) {
             log.info("invalid meta");
@@ -62,9 +62,10 @@ public class TablesController {
     @Loggable
     @RequestMapping(value = "get-table-by-name/{name}", method = RequestMethod.GET)
     public ResponseEntity<TableMetaDto> getTable(@PathVariable("name") String name) {
-        log.info("GET /api/table/get-table-by-name/{}", name);
+
         TableMetaDto tableMeta = tablesService.findTableMeta(name);
         log.info("found {}", tableMeta != null);
+
         if (tableMeta != null) {
             for (ColumnMetaDto column : tableMeta.getColumnInfos()) {
                 column.setType(typeConverter(column.getType()));
@@ -78,7 +79,7 @@ public class TablesController {
     @Loggable
     @RequestMapping(value = "drop-table/{name}", method = RequestMethod.DELETE)
     public ResponseEntity deleteTable(@PathVariable("name") String name) {
-        log.info("DELETE /api/table/drop-table/{}", name);
+
         try {
             tablesService.deleteTable(name);
             int deletedQueries = tableQueriesService.delete(name);

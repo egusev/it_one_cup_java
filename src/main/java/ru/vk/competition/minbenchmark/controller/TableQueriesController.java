@@ -38,7 +38,7 @@ public class TableQueriesController {
     @Loggable
     @RequestMapping(value = "add-new-query-to-table", method = RequestMethod.POST)
     public ResponseEntity createQuery(@RequestBody TableQueryDto tableQueryDto) {
-        log.info("POST /api/table-query/add-new-query-to-table {} in {}", tableQueryDto.getQueryId(), tableQueryDto.getTableName());
+        log.info("{}", tableQueryDto);
 
         if (!validate(tableQueryDto)) {
             log.info("invalid dto");
@@ -68,7 +68,7 @@ public class TableQueriesController {
     @Loggable
     @RequestMapping(value = "modify-query-in-table", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody TableQueryDto tableQueryDto) {
-        log.info("PUT /api/table-query/modify-query-in-table {} in {}", tableQueryDto.getQueryId(), tableQueryDto.getTableName());
+        log.info("{}", tableQueryDto);
 
         if (!validate(tableQueryDto)) {
             log.info("invalid dto");
@@ -98,7 +98,6 @@ public class TableQueriesController {
     @Loggable
     @RequestMapping(value = "delete-table-query-by-id/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") int id) {
-        log.info("DELETE /api/table-query/delete-table-query-by-id/{}", id);
 
         try {
             tableQueriesService.delete(id);
@@ -117,7 +116,6 @@ public class TableQueriesController {
     @Loggable
     @RequestMapping(value = "get-table-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<TableQueryDto> get(@PathVariable("id") int queryId) {
-        log.info("GET /api/table-query/get-table-query-by-id/{}", queryId);
 
         TableQueryDto tableQueryDto = tableQueriesService.getById(queryId);
         log.info("table query found {}", tableQueryDto != null);
@@ -135,7 +133,6 @@ public class TableQueriesController {
     @Loggable
     @RequestMapping(value = "get-all-queries-by-table-name/{name}", method = RequestMethod.GET)
     public ResponseEntity<List<TableQueryDto>> get(@PathVariable("name") String tableName) {
-        log.info("GET /api/table-query/get-all-queries-by-table-name/{}", tableName);
 
         if (tablesService.findTableMeta(tableName) == null) {
             log.info("table doesn't exist");
@@ -155,7 +152,6 @@ public class TableQueriesController {
     @Loggable
     @RequestMapping(value = "get-all-table-queries", method = RequestMethod.GET)
     public List<TableQueryDto> getAll() {
-        log.info("GET /api/table-query/get-all-table-queries");
 
         List<TableQueryDto> tableQueries = tableQueriesService.getAll();
 
@@ -170,7 +166,6 @@ public class TableQueriesController {
     @Loggable
     @RequestMapping(value = "execute-table-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity execute(@PathVariable("id") int id) {
-        log.info("GET /api/table-query/execute-table-query-by-id/{}", id);
 
         try {
             tableQueriesService.execute(id);

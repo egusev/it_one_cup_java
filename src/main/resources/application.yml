@@ -4,6 +4,7 @@ server:
 spring:
   datasource:
     url: jdbc:h2:mem:mydb
+#    ;database_to_upper=false;database_to_lower=false;case_insensitive_identifiers=true;
     username: sa
     password: password
     driverClassName: org.h2.Driver

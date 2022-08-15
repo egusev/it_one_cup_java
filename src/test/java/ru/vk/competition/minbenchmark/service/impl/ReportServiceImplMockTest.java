@@ -17,7 +17,6 @@ import ru.vk.competition.minbenchmark.dto.ColumnMetaDto;
 import ru.vk.competition.minbenchmark.dto.TableReportDto;
 import ru.vk.competition.minbenchmark.repository.QueriesDao;
 
-//@SpringBootTest(classes = {MinbenchmarkApplication.class})
 @ExtendWith(MockitoExtension.class)
 class ReportServiceImplMockTest {
 

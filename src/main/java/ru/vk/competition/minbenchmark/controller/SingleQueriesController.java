@@ -33,7 +33,7 @@ public class SingleQueriesController {
     @Loggable
     @RequestMapping(value = "add-new-query", method = RequestMethod.POST)
     public ResponseEntity createQuery(@RequestBody QueryDto queryDto) {
-        log.info("POST /api/single-query/add-new-query {}", queryDto.getQueryId());
+        log.info("{}: {}", queryDto.getQueryId(), queryDto);
 
         if (!validate(queryDto)) {
             log.info("invalid dto");
@@ -58,7 +58,7 @@ public class SingleQueriesController {
     @Loggable
     @RequestMapping(value = "modify-query", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody QueryDto queryDto) {
-        log.info("PUT /api/single-query/modify-query {}", queryDto.getQueryId());
+        log.info("{}: {}", queryDto.getQueryId(), queryDto);
 
         if (!validate(queryDto)) {
             log.info("invalid dto");
@@ -83,7 +83,6 @@ public class SingleQueriesController {
     @Loggable
     @RequestMapping(value = "delete-single-query-by-id/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("id") int id) {
-        log.info("DELETE /api/single-query/delete-single-query-by-id/{}", id);
 
         try {
             singleQueriesService.delete(id);
@@ -102,7 +101,6 @@ public class SingleQueriesController {
     @Loggable
     @RequestMapping(value = "get-single-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<QueryDto> get(@PathVariable("id") int queryId) {
-        log.info("GET /api/single-query/get-single-query-by-id/{}", queryId);
 
         QueryDto queryDto = singleQueriesService.getById(queryId);
         log.info("query found {}", queryDto != null);
@@ -120,7 +118,6 @@ public class SingleQueriesController {
     @Loggable
     @RequestMapping(value = "get-all-single-queries", method = RequestMethod.GET)
     public List<QueryDto> getAll() {
-        log.info("GET /api/single-query/get-all-single-queries");
 
         List<QueryDto> queries = singleQueriesService.getAll();
 
@@ -135,7 +132,6 @@ public class SingleQueriesController {
     @Loggable
     @RequestMapping(value = "execute-single-query-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity execute(@PathVariable("id") int id) {
-        log.info("GET /api/single-query/execute-single-query-by-id/{}", id);
 
         try {
             singleQueriesService.execute(id);

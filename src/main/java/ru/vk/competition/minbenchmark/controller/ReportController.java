@@ -27,7 +27,7 @@ public class ReportController {
     @Loggable
     @RequestMapping(value = "create-report", method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody ReportDto reportDto) {
-        log.info("POST /api/report/create-report {}", reportDto.getReportId());
+        log.info("{}: {}", reportDto.getReportId(), reportDto);
 
         if (!validate(reportDto)) {
             log.info("invalid report request");
@@ -49,7 +49,6 @@ public class ReportController {
     @Loggable
     @RequestMapping(value = "get-report-by-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<ReportDto> get(@PathVariable("id") int id) {
-        log.info("POST /api/report/get-report-by-id/{}", id);
 
         ReportDto reportDto = reportService.getReport(id);
         log.info("found report {}", reportDto != null);
